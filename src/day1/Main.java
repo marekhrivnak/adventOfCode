@@ -9,8 +9,6 @@ import java.util.List;
 
 public class Main {
 
-    private static String FILEPATH = "./src/day1/day01-input.txt";
-
     public static void main(String[] args) {
         firstTask();
         secondTask();
@@ -87,6 +85,7 @@ public class Main {
 
     private static List<String> getLinesFromFile() {
         try {
+            String FILEPATH = "./src/day1/day01-input.txt";
             Path path = Paths.get(FILEPATH);
             return Files.readAllLines(path);
         } catch (IOException e) {
