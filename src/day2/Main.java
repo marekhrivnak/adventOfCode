@@ -16,15 +16,52 @@ public class Main {
 
     public static void main(String[] args) {
         firstTask();
+        secondTask();
     }
 
     public static void firstTask() {
         List<String> lines = getLinesFromFile();
         assert lines != null;
-        long result = IntStream.range(1, lines.size()+1)
-                .filter(index -> isGamePossible(lines.get(index-1)))
+        long result = IntStream.range(1, lines.size() + 1)
+                .filter(index -> isGamePossible(lines.get(index - 1)))
                 .sum();
         System.out.println(result);
+    }
+
+    public static void secondTask() {
+        List<String> lines = getLinesFromFile();
+        assert lines != null;
+        int result = IntStream.range(1, lines.size() + 1)
+                .map(index -> leastAmountOfCubes(lines.get(index - 1)))
+                .sum();
+        System.out.println(result);
+
+    }
+
+    private static int leastAmountOfCubes(String line) {
+        String[] game = line.split(":");
+        String[] subsets = game[1].split(";");
+
+        int redCubes = 0;
+        int greenCubes = 0;
+        int blueCubes = 0;
+
+        for (String subset : subsets) {
+            for (String cubes : subset.split(",")) {
+                int numberOfCubes = Integer.parseInt(cubes.strip().split(" ")[0]);
+                if (cubes.contains("red")) {
+                    redCubes = Math.max(redCubes, numberOfCubes);
+                }
+                if (cubes.contains("blue")) {
+                    blueCubes = Math.max(blueCubes, numberOfCubes);
+                }
+                if (cubes.contains("green")) {
+                    greenCubes = Math.max(greenCubes, numberOfCubes);
+                }
+            }
+        }
+
+        return redCubes * greenCubes * blueCubes;
     }
 
     private static boolean isGamePossible(String line) {
